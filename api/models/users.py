@@ -1,4 +1,4 @@
-from sqlmodel import Field
+from sqlmodel import Field, Session, select
 from pydantic import EmailStr
 
 import bcrypt
@@ -17,3 +17,7 @@ class User(Base, table=True):
     
     def validate_password(self, password) -> bool:
         return bcrypt.checkpw(password=password.encode(), hashed_password=self.hashed_password.encode())
+    
+    def lookup_user(username: str, session: Session):
+        statement = select(User).where(User.username == username)
+        return session.exec(statement).first()

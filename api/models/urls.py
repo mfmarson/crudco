@@ -1,5 +1,5 @@
 from.base import Base
-import datetime 
+from datetime import datetime
 from sqlmodel import Field
 
 class Urls (Base,table=True):
